@@ -92,13 +92,6 @@ public class MainActivity extends SlidingActivity implements
 	Button datePickerButton;
 	ImageButton searchButton;
 
-	public void good() {
-		int i = 10;
-		int j = i + 1;
-	}
-	public void bad() {
-		
-	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -381,11 +374,45 @@ public class MainActivity extends SlidingActivity implements
 		long tempTime = System.currentTimeMillis();
 		long intervalTime = tempTime - firstBackPressedTime;
 
+		
+		int fragmentPosition = mViewPager.getCurrentItem();
+		Fragment webViewFragment = mSectionsPagerAdapter.getItem(fragmentPosition);
+		if (webViewFragment instanceof MainFragment) {
+			if(((MainFragment) webViewFragment).getWebViewCanGoBack()) 
+				((MainFragment) webViewFragment).enableWebViewBack();
+			else {
+				finishAppOnBackDoublePressed(tempTime, intervalTime);
+			}
+		}
+		else if(webViewFragment instanceof CompareFragment) {
+			if(((CompareFragment) webViewFragment).getWebViewCanGoBack()) 
+				((CompareFragment) webViewFragment).enableWebViewBack();
+			else {
+				finishAppOnBackDoublePressed(tempTime, intervalTime);
+			}
+		}
+		else if(webViewFragment instanceof EstimateFragment) {
+			if(((EstimateFragment) webViewFragment).getWebViewCanGoBack()) 
+				((EstimateFragment) webViewFragment).enableWebViewBack();
+			else {
+				finishAppOnBackDoublePressed(tempTime, intervalTime);
+			}
+		}
+		else if(webViewFragment instanceof MyPageFragment) {
+			if(((MyPageFragment) webViewFragment).getWebViewCanGoBack()) 
+				((MyPageFragment) webViewFragment).enableWebViewBack();
+			else {
+				finishAppOnBackDoublePressed(tempTime, intervalTime);
+			}
+		}
+	}
+	
+	public void finishAppOnBackDoublePressed(long tempTime, long intervalTime) {
 		if (intervalTime >= 0 && FINISH_INTERVAL_TIME >= intervalTime) {
 			finish();
 		} else {
 			firstBackPressedTime = tempTime;
-			Toast.makeText(getApplicationContext(), "  '뒤로'버튼을 한 번 더 누르시면 종료됩니다.  ",
+			Toast.makeText(getApplicationContext(), "'뒤로'버튼을 한 번 더 누르시면 종료됩니다.",
 					Toast.LENGTH_SHORT).show();
 		}
 	}

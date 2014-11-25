@@ -18,11 +18,11 @@ public class MyPageFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View mainView = inflater.inflate(R.layout.fragment_mypage, container,
+		View myPageView = inflater.inflate(R.layout.fragment_mypage, container,
 				false);
 
 		
-		webViewMyPage = (WebView) mainView.findViewById(R.id.webViewMyPage);
+		webViewMyPage = (WebView) myPageView.findViewById(R.id.webViewMyPage);
 		WebSettings webSettings = webViewMyPage.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 
@@ -38,11 +38,21 @@ public class MyPageFragment extends Fragment {
 		Log.i("MyPageFragment - onCreateView", "loaded");
 
 		// TODO Auto-generated method stub
-		return mainView;
+		return myPageView;
 	}
 	
 	public void loadMyPage(String emailAddress){
 		
 	}
 
+	public boolean getWebViewCanGoBack() {
+		if(webViewMyPage != null)
+			return webViewMyPage.canGoBack();
+		else
+			return false;
+	}
+	
+	public void enableWebViewBack() {
+			webViewMyPage.goBack();
+	}
 }
