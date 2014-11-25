@@ -92,6 +92,9 @@ public class MainActivity extends SlidingActivity implements
 	Button datePickerButton;
 	ImageButton searchButton;
 
+	public void good() {
+		
+	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
