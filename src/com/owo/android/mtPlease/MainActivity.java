@@ -214,10 +214,6 @@ public class MainActivity extends SlidingActivity implements
 			}
 
 		});
-		extras = getIntent().getExtras();
-		String sessionID = extras.getString("SESSION_ID");
-		Log.i("activity Email", sessionID);
-		sendInfoToFragment(sessionID, 3);
 
 	}
 
@@ -284,6 +280,9 @@ public class MainActivity extends SlidingActivity implements
             this.mCompareFragment = (CompareFragment) PlaceholderFragment.newInstance(1 + 1);
             this.mEstimateFragment = (EstimateFragment) PlaceholderFragment.newInstance(2 + 1);
             this.mMyPageFragment = (MyPageFragment) PlaceholderFragment.newInstance(3 + 1);
+			
+			extras = getIntent().getExtras();
+			this.mMyPageFragment.setArguments(extras);
 		}
 
 		@Override
@@ -361,9 +360,8 @@ public class MainActivity extends SlidingActivity implements
 				selectedFragment = new MyPageFragment();
 				break;
 			}
-
 			Bundle args = new Bundle();
-			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+			args.putInt(ARG_SECTION_NUMBER, sectionNumber);			
 			selectedFragment.setArguments(args);
 
 			return selectedFragment;
@@ -535,8 +533,6 @@ public class MainActivity extends SlidingActivity implements
 			break;
 		case 3:
 			MyPageFragment mypagefrag = (MyPageFragment) mSectionsPagerAdapter.getItem(position);
-			Log.i("in myPageFragmend", string);
-			mypagefrag.loadMyPage(string);
 			break;
 		}
 	}
