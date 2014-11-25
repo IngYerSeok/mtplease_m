@@ -93,7 +93,8 @@ public class MainActivity extends SlidingActivity implements
 	ImageButton searchButton;
 
 	public void good() {
-		
+		int i = 10;
+		int j = i + 1;
 	}
 	public void bad() {
 		
