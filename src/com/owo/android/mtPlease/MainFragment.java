@@ -48,5 +48,16 @@ public class MainFragment extends Fragment {
 		webViewMain.loadUrl("http://mtplease.herokuapp.com/pensions/search_m"
 				+ url);
 	}
-
+	
+	public boolean getWebViewCanGoBack() {
+		if(webViewMain != null)
+			return webViewMain.canGoBack();
+		else
+			return false;
+	}
+	
+	public void enableWebViewBack() {
+		if(webViewMain != null)
+			webViewMain.goBack();
+	}
 }

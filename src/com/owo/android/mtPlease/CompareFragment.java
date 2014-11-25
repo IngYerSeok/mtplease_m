@@ -40,4 +40,15 @@ public class CompareFragment extends Fragment {
 		return mainView;
 	}
 
+	public boolean getWebViewCanGoBack() {
+		if(webViewCompare != null)
+			return webViewCompare.canGoBack();
+		else 
+			return false;
+	}
+	
+	public void enableWebViewBack() {
+		if(webViewCompare != null)
+			webViewCompare.goBack();
+	}
 }

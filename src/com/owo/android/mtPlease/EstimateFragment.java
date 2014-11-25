@@ -18,10 +18,10 @@ public class EstimateFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View mainView = inflater.inflate(R.layout.fragment_estimate, container,
+		View estimateView = inflater.inflate(R.layout.fragment_estimate, container,
 				false);
 
-		webViewEstimate = (WebView) mainView.findViewById(R.id.webViewEstimate);
+		webViewEstimate = (WebView) estimateView.findViewById(R.id.webViewEstimate);
 		WebSettings webSettings = webViewEstimate.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 
@@ -37,7 +37,19 @@ public class EstimateFragment extends Fragment {
 		Log.i("EstimateFragment - onCreateView", "loaded");
 
 		// TODO Auto-generated method stub
-		return mainView;
+		return estimateView;
 	}
 
+	public boolean getWebViewCanGoBack() {
+		if(webViewEstimate != null)
+			return webViewEstimate.canGoBack();
+		else
+			return false;
+	}
+	
+	public void enableWebViewBack() {
+		if(webViewEstimate != null) {
+			webViewEstimate.goBack();
+		}
+	}
 }
