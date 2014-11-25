@@ -93,7 +93,7 @@ public class MainActivity extends SlidingActivity implements
 	ImageButton searchButton;
 
 	public void good() {
-		
+		datePickerButton.addChildrenForAccessibility(null);
 	}
 	public void bad() {
 		
