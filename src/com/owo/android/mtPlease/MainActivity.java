@@ -95,6 +95,9 @@ public class MainActivity extends SlidingActivity implements
 	public void good() {
 		
 	}
+	public void bad() {
+		
+	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
