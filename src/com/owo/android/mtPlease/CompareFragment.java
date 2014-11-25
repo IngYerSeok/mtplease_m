@@ -13,7 +13,9 @@ import android.webkit.WebViewClient;
 
 public class CompareFragment extends Fragment {
 
-	WebView webViewCompare;
+	private WebView webViewCompare;
+	private WebViewJavascriptInterface mWebViewInterface;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,14 +26,13 @@ public class CompareFragment extends Fragment {
 		webViewCompare = (WebView) mainView.findViewById(R.id.webViewCompare);
 		WebSettings webSettings = webViewCompare.getSettings();
 		webSettings.setJavaScriptEnabled(true);
-
 		webViewCompare.setWebViewClient(new WebViewClient() {
 
 		});
 		webViewCompare.setWebChromeClient(new WebChromeClient() {
 
 		});
-
+		webViewCompare.addJavascriptInterface(mWebViewInterface, "CompareFragment");
 		webViewCompare.loadUrl("file:///android_asset/pensions_compare_m.html");
 
 		Log.i("CompareFragment - onCreateView", "loaded");

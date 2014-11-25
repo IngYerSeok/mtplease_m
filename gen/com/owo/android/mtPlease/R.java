@@ -127,9 +127,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int viewBehind=0x7f010002;
     }
     public static final class color {
-        public static final int branding_color1=0x7f060002;
-        public static final int branding_color2=0x7f060003;
-        public static final int branding_color3=0x7f060004;
+        public static final int black=0x7f060002;
+        public static final int branding_color1=0x7f060003;
+        public static final int branding_color2=0x7f060004;
+        public static final int branding_color3=0x7f060005;
         public static final int transparent=0x7f060000;
         public static final int white=0x7f060001;
     }

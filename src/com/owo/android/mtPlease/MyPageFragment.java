@@ -34,7 +34,8 @@ import android.webkit.WebViewClient;
 
 public class MyPageFragment extends Fragment {
 
-	WebView webViewMyPage;
+	private	WebView webViewMyPage;
+	private WebViewJavascriptInterface mWebViewInterface;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +54,7 @@ public class MyPageFragment extends Fragment {
 		webViewMyPage.setWebChromeClient(new WebChromeClient() {
 
 		});
-
+		webViewMyPage.addJavascriptInterface(mWebViewInterface, "MyPageFragment");
 		webViewMyPage.loadUrl("http://mtplease.herokuapp.com/members/myPage_m");
 		
 		Log.i("MyPageFragment - onCreateView", "loaded");

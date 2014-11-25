@@ -15,7 +15,8 @@ import android.webkit.WebViewClient;
 
 public class MainFragment extends Fragment {
 
-	WebView webViewMain;
+	private WebView webViewMain;
+	private WebViewJavascriptInterface mWebViewInterface;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,17 +26,15 @@ public class MainFragment extends Fragment {
 
 		webViewMain = (WebView) mainView.findViewById(R.id.webViewMain);
 		WebSettings webSettings = webViewMain.getSettings();
-		webSettings.setJavaScriptEnabled(true);
-		
+		webSettings.setJavaScriptEnabled(true);		
 		webViewMain.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
 		webViewMain.setWebViewClient(new WebViewClient() {
 
 		});
 		webViewMain.setWebChromeClient(new WebChromeClient() {
 
 		});
-
+		webViewMain.addJavascriptInterface(mWebViewInterface, "MainFragment");
 		webViewMain.loadUrl("http://mtplease.herokuapp.com/pensions/search_m?people=20&region=1&date=2014-11-15&flag=1");
 
 		Log.i("MainFragment - onCreateView", "loaded");

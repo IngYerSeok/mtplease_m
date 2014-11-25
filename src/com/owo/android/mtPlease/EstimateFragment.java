@@ -13,7 +13,8 @@ import android.webkit.WebViewClient;
 
 public class EstimateFragment extends Fragment {
 
-	WebView webViewEstimate;
+	private WebView webViewEstimate;
+	private WebViewJavascriptInterface mWebViewInterface;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,7 +32,7 @@ public class EstimateFragment extends Fragment {
 		webViewEstimate.setWebChromeClient(new WebChromeClient() {
 
 		});
-
+		webViewEstimate.addJavascriptInterface(mWebViewInterface, "EstimateFragment");
 		webViewEstimate.loadUrl("file:///android_asset/pensions_estimate_add_barbecue_m.html");
 
 		Log.i("EstimateFragment - onCreateView", "loaded");
