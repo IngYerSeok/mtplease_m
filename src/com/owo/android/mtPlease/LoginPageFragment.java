@@ -140,7 +140,7 @@ public class LoginPageFragment extends Fragment {
 		protected void onPostExecute(HttpResponse result) {
 			// super.onPostExecute(result);
 			try {
-				mFragmentCallback.onTaskDone(isLoginSuccess);
+				mFragmentCallback.onTaskDone(isLoginSuccess, emailAddress.getText().toString());
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			}
@@ -148,7 +148,7 @@ public class LoginPageFragment extends Fragment {
 	}
 	
 	public interface FragmentCallback {
-		public void onTaskDone(boolean isLoginSuccess);
+		public void onTaskDone(boolean isLoginSuccess, String emailAddress);
 	}
 	
 	private void startLoginTask() {
@@ -161,12 +161,13 @@ public class LoginPageFragment extends Fragment {
 	      LoginTask loginTask = new LoginTask(new FragmentCallback() {
 
 	         @Override
-	         public void onTaskDone(boolean isLoginSuccess) {
+	         public void onTaskDone(boolean isLoginSuccess, String emailAddress) {
 	            loginProgressDialog.dismiss();
 
 	            if (isLoginSuccess) {
 	               Intent intent = new Intent(getActivity()
 	                     .getApplicationContext(), MainActivity.class);
+	               intent.putExtra("SESSION_ID", emailAddress);
 	               startActivity(intent);
 	               getActivity().finish();
 	            }

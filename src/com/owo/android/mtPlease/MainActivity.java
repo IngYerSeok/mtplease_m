@@ -96,6 +96,7 @@ public class MainActivity extends SlidingActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 
 		// Set up the action bar
 		final ActionBar actionBar = getActionBar();
@@ -154,10 +155,13 @@ public class MainActivity extends SlidingActivity implements
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
-		Intent i = getIntent();
-		Bundle dataBundle = i.getExtras();
-		String emailAddress = dataBundle.getString("emailAddress");
-		sendInfoToFragment(emailAddress, 3);
+		
+		// Activity가 실행될 때 받아온 emailAddress(SESSION_ID)를 받아서 MyPageFragment에 보내준다.
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+		    String sessionID = extras.getString("SESSION_ID");
+		    sendInfoToFragment(sessionID, 3);
+		}
 		
 
 		locationSelectSpinner = (Spinner) findViewById(R.id.spinner_location);
