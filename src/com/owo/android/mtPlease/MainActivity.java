@@ -91,6 +91,7 @@ public class MainActivity extends SlidingActivity implements
 	Spinner locationSelectSpinner;
 	Button datePickerButton;
 	ImageButton searchButton;
+	Bundle extras;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -156,14 +157,6 @@ public class MainActivity extends SlidingActivity implements
 					.setTabListener(this));
 		}
 		
-		// Activity가 실행될 때 받아온 emailAddress(SESSION_ID)를 받아서 MyPageFragment에 보내준다.
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-		    String sessionID = extras.getString("SESSION_ID");
-		    sendInfoToFragment(sessionID, 3);
-		}
-		
-
 		locationSelectSpinner = (Spinner) findViewById(R.id.spinner_location);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
 				this, R.array.location_array, R.layout.spinner_text);
@@ -186,6 +179,9 @@ public class MainActivity extends SlidingActivity implements
 			}
 
 		});
+		// Activity가 실행될 때 받아온 emailAddress(SESSION_ID)를 받아서 MyPageFragment에 보내준다.
+
+
 
 		// 검색 버튼 설정 부분
 		searchButton = (ImageButton)findViewById(R.id.imageButton_search);
@@ -213,11 +209,16 @@ public class MainActivity extends SlidingActivity implements
 				
 				String query = "?region="+region+"&people="+people+"&date="+date+"&flag=1";
 				sendInfoToFragment(query, 0);
-				
+					
 				getSlidingMenu().showContent();
 			}
 
 		});
+		extras = getIntent().getExtras();
+		String sessionID = extras.getString("SESSION_ID");
+		Log.i("activity Email", sessionID);
+		sendInfoToFragment(sessionID, 3);
+
 	}
 
 	@Override
@@ -534,6 +535,7 @@ public class MainActivity extends SlidingActivity implements
 			break;
 		case 3:
 			MyPageFragment mypagefrag = (MyPageFragment) mSectionsPagerAdapter.getItem(position);
+			Log.i("in myPageFragmend", string);
 			mypagefrag.loadMyPage(string);
 			break;
 		}

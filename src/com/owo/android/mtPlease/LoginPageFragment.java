@@ -163,10 +163,10 @@ public class LoginPageFragment extends Fragment {
 	         @Override
 	         public void onTaskDone(boolean isLoginSuccess, String emailAddress) {
 	            loginProgressDialog.dismiss();
+	            Log.i("emailAddress", emailAddress);
 
 	            if (isLoginSuccess) {
-	               Intent intent = new Intent(getActivity()
-	                     .getApplicationContext(), MainActivity.class);
+	               Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
 	               intent.putExtra("SESSION_ID", emailAddress);
 	               startActivity(intent);
 	               getActivity().finish();
