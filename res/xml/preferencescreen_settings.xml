@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="pref_key_notification_settings"
+        android:title="알림 설정" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_notification_on_off"
+            android:summary="엠티를 부탁해 어플리케이션의 알림 On/Off"
+            android:title="알림 On" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_notification_sound_on_off"
+            android:summary="알림음 On/Off"
+            android:title="알림음" />
+        
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_vibration_on_off"
+            android:summary="진동 On/Off"
+            android:title="진동" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

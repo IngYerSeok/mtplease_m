@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">엠티를 부탁해</string>
+    <string name="title_section1">펜션 검색</string>
+    <string name="title_section2">비교페이지</string>
+    <string name="title_section3">견적페이지</string>
+    <string name="title_section4">마이페이지</string>
+    <string name="action_settings">설정</string>
+    <string name="text_facebook_login">로그인</string>
+    <string name="text_sign_in">회원가입</string>
+
+    <string name="location_select">어디로?</string>
+    <string-array name="location_array">
+        <item>대성리로</item>
+        <item>청평으로</item>
+        <item>가평으로</item>
+    </string-array>
+
+</resources>

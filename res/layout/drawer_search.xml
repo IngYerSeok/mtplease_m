@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branding_color1"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/button_search_drawer_close"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@color/transparent"
+        android:text="X" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="32dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/text_us"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="우리는"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="35sp" />
+
+        <Spinner
+            android:id="@+id/spinner_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/button_transparent"
+            android:prompt="@string/location_select"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/editText_numberPeople"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:hint="몇"
+                android:inputType="numberDecimal"
+                android:maxLength="3"
+                android:textSize="35sp" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/text_numberPeople"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="명이서"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="35sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/button_datepicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/button_transparent"
+                android:text="2014년 12월 31일"
+                android:textColor="@color/branding_color2"
+                android:textSize="35sp" />
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="에"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="35sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_goMT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="엠티를 간다!"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="35sp" />
+
+        <ImageButton
+            android:id="@+id/imageButton_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/button_search"
+            android:src="@drawable/button_search" />
+    </LinearLayout>
+
+</LinearLayout>

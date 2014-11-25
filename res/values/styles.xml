@@ -1,0 +1,49 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <style name="MTPleaseTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTab</item>
+    </style>
+    
+    <!-- ActionBar styles -->
+    <style name="ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/branding_color1</item>
+        <item name="android:backgroundStacked">#FFFFFF</item>
+        <item name="android:titleTextStyle">@style/ActionBarTitleText</item>
+    </style>
+
+    <!-- ActionBar title text -->
+    <style name="ActionBarTitleText" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+
+    <!-- ActionBar tabs text styles -->
+    <style name="ActionBarTabText">
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <!-- ActionBar tabs styles -->
+    <style name="ActionBarTab">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/tab_bar_background</item>
+    </style>
+    
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+</resources>

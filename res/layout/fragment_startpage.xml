@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/branding_color1"
+    android:gravity="center" >
+
+    <ImageView
+        android:id="@+id/image_loading_logo_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_loading_title"
+        android:contentDescription="로딩페이지 로고" />
+
+    <Button
+        android:id="@+id/button_loading_facebook_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_loading_background"
+        android:layout_marginLeft="56dp"
+        android:layout_marginRight="56dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/text_facebook_login" />
+
+    <Button
+        android:id="@+id/button_loading_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_loading_background"
+        android:layout_marginLeft="56dp"
+        android:layout_marginRight="56dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/text_sign_in" />
+
+</LinearLayout>
