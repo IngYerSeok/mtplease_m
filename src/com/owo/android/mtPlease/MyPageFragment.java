@@ -1,6 +1,27 @@
 package com.owo.android.mtPlease;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpConnectionParams;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.owo.android.mtPlease.LoginPageFragment.FragmentCallback;
+
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,7 +63,8 @@ public class MyPageFragment extends Fragment {
 	}
 	
 	public void loadMyPage(String emailAddress){
-		
+		webViewMyPage.loadUrl("http://mtplease.herokuapp.com/members/myPage_m?" + emailAddress);
+		// new LoadMyPage(emailAddress).execute();
 	}
-
+	
 }

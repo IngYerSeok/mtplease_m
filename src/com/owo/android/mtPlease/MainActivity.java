@@ -92,13 +92,6 @@ public class MainActivity extends SlidingActivity implements
 	Button datePickerButton;
 	ImageButton searchButton;
 
-	public void good() {
-		int i = 10;
-		int j = i + 1;
-	}
-	public void bad() {
-		
-	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -161,10 +154,10 @@ public class MainActivity extends SlidingActivity implements
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
-/*		Intent i = getIntent();
+		Intent i = getIntent();
 		Bundle dataBundle = i.getExtras();
-		String emailAddress = dataBundle.getString("emailAddress");*/
-		//respond(emailAddress, 3);
+		String emailAddress = dataBundle.getString("emailAddress");
+		sendInfoToFragment(emailAddress, 3);
 		
 
 		locationSelectSpinner = (Spinner) findViewById(R.id.spinner_location);
@@ -503,7 +496,7 @@ public class MainActivity extends SlidingActivity implements
 			break;
 		case 3:
 			MyPageFragment mypagefrag = (MyPageFragment) mSectionsPagerAdapter.getItem(position);
-			// mypagefrag.loadMyPage(string);
+			mypagefrag.loadMyPage(string);
 			break;
 		}
 	}
