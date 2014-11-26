@@ -66,6 +66,7 @@ public class MyPageFragment extends Fragment {
 	public void loadMyPage(String emailAddress){
 		webViewMyPage.loadUrl("http://mtplease.herokuapp.com/members/myPage_m?" + emailAddress);
 		// new LoadMyPage(emailAddress).execute();
+
 	}
 
 	public boolean getWebViewCanGoBack() {
