@@ -3,10 +3,8 @@ package com.owo.android.mtPlease;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -34,8 +32,10 @@ public class MainFragment extends Fragment {
 		webViewMain.setWebChromeClient(new WebChromeClient() {
 
 		});
+		mWebViewInterface = new WebViewJavascriptInterface(getActivity(), webViewMain);
 		webViewMain.addJavascriptInterface(mWebViewInterface, "MainFragment");
 		webViewMain.loadUrl("http://mtplease.herokuapp.com/pensions/search_m?people=20&region=1&date=2014-11-15&flag=1");
+		//webViewMain.loadUrl("file:///android_asset/pensions_resultList_m.html");
 
 		Log.i("MainFragment - onCreateView", "loaded");
 
