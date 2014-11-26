@@ -43,7 +43,6 @@ public class MyPageFragment extends Fragment {
 		View myPageView = inflater.inflate(R.layout.fragment_mypage, container,
 				false);
 
-		
 		webViewMyPage = (WebView) myPageView.findViewById(R.id.webViewMyPage);
 		WebSettings webSettings = webViewMyPage.getSettings();
 		webSettings.setJavaScriptEnabled(true);
@@ -55,18 +54,11 @@ public class MyPageFragment extends Fragment {
 
 		});
 		webViewMyPage.addJavascriptInterface(mWebViewInterface, "MyPageFragment");
-		webViewMyPage.loadUrl("http://mtplease.herokuapp.com/members/myPage_m");
-		
+		webViewMyPage.loadUrl("http://mtplease.herokuapp.com/members/myPage_m?user_id=" + getArguments().getString("SESSION_ID"));		
 		Log.i("MyPageFragment - onCreateView", "loaded");
 
 		// TODO Auto-generated method stub
 		return myPageView;
-	}
-	
-	public void loadMyPage(String emailAddress){
-		webViewMyPage.loadUrl("http://mtplease.herokuapp.com/members/myPage_m?" + emailAddress);
-		// new LoadMyPage(emailAddress).execute();
-
 	}
 
 	public boolean getWebViewCanGoBack() {
