@@ -32,7 +32,7 @@ public class EstimateFragment extends Fragment {
 		webViewEstimate.setWebChromeClient(new WebChromeClient() {
 
 		});
-		mWebViewInterface = new WebViewJavascriptInterface(getActivity(), webViewEstimate);
+		mWebViewInterface = new WebViewJavascriptInterface(getActivity(), this);
 		webViewEstimate.addJavascriptInterface(mWebViewInterface, "EstimateFragment");
 		webViewEstimate.loadUrl("file:///android_asset/pensions_estimate_add_barbecue_m.html");
 

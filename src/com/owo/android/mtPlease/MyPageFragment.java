@@ -32,7 +32,7 @@ public class MyPageFragment extends Fragment {
 		webViewMyPage.setWebChromeClient(new WebChromeClient() {
 
 		});
-		mWebViewInterface = new WebViewJavascriptInterface(getActivity(), webViewMyPage);
+		mWebViewInterface = new WebViewJavascriptInterface(getActivity(), this);
 		webViewMyPage.addJavascriptInterface(mWebViewInterface, "MyPageFragment");
 		webViewMyPage.loadUrl("http://mtplease.herokuapp.com/members/myPage_m?user_id=" + getArguments().getString("SESSION_ID"));		
 		Log.i("MyPageFragment - onCreateView", "loaded");

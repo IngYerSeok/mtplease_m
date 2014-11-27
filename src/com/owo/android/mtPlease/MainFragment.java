@@ -10,6 +10,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 public class MainFragment extends Fragment {
 
@@ -32,10 +33,10 @@ public class MainFragment extends Fragment {
 		webViewMain.setWebChromeClient(new WebChromeClient() {
 
 		});
-		mWebViewInterface = new WebViewJavascriptInterface(getActivity(), webViewMain);
+		mWebViewInterface = new WebViewJavascriptInterface(getActivity(), this);
 		webViewMain.addJavascriptInterface(mWebViewInterface, "MainFragment");
-		webViewMain.loadUrl("http://mtplease.herokuapp.com/pensions/search_m?people=20&region=1&date=2014-11-15&flag=1");
-		//webViewMain.loadUrl("file:///android_asset/pensions_resultList_m.html");
+		//webViewMain.loadUrl("http://mtplease.herokuapp.com/pensions/search_m?people=20&region=1&date=2014-11-15&flag=1");
+		webViewMain.loadUrl("file:///android_asset/pensions_resultList_m.html");
 
 		Log.i("MainFragment - onCreateView", "loaded");
 
@@ -58,5 +59,10 @@ public class MainFragment extends Fragment {
 	public void enableWebViewBack() {
 		if(webViewMain != null)
 			webViewMain.goBack();
+	}
+	
+	public void toastShort(String message) {
+		Log.i("MainFragment", "test");
+		Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 	}
 }

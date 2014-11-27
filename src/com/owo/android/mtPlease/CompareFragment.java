@@ -32,7 +32,7 @@ public class CompareFragment extends Fragment {
 		webViewCompare.setWebChromeClient(new WebChromeClient() {
 
 		});
-		mWebViewInterface = new WebViewJavascriptInterface(getActivity(), webViewCompare);
+		mWebViewInterface = new WebViewJavascriptInterface(getActivity(), this);
 		webViewCompare.addJavascriptInterface(mWebViewInterface, "CompareFragment");
 		webViewCompare.loadUrl("file:///android_asset/pensions_compare_m.html");
 

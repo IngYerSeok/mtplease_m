@@ -1,13 +1,14 @@
 package com.owo.android.mtPlease;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Toast;
 
 public class WebViewJavascriptInterface {
-	private WebView mAppView;
 	private Activity mContext;
+	private Fragment mFragment;
 
 	/**
 	 * 생성자.
@@ -15,9 +16,9 @@ public class WebViewJavascriptInterface {
 	 * @param activity : context
 	 * @param view : 적용될 웹뷰
 	 */
-	public WebViewJavascriptInterface(Activity activity, WebView view) {
-		mAppView = view;
+	public WebViewJavascriptInterface(Activity activity, Fragment fragment) {
 		mContext = activity;
+		mFragment = fragment;
 	}
 
 	/**
@@ -37,6 +38,7 @@ public class WebViewJavascriptInterface {
 	 */
 	@JavascriptInterface
 	public void toastShort(String message) { // Show toast for a short time
-		Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+		//Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+		((MainFragment) mFragment).toastShort(message);
 	}
 }
