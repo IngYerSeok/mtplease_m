@@ -47,7 +47,7 @@ public class LoginPageFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		View loginPageView = inflater.inflate(R.layout.fragment_login,
+		View loginPageView = inflater.inflate(R.layout.fragment_loginpage,
 				container, false);
 
 		// 이메일 주소 텍스트에디트
@@ -147,10 +147,6 @@ public class LoginPageFragment extends Fragment {
 		}
 	}
 	
-	public interface FragmentCallback {
-		public void onTaskDone(boolean isLoginSuccess, String emailAddress);
-	}
-	
 	private void startLoginTask() {
 	      loginProgressDialog = new ProgressDialog(getActivity());
 	      loginProgressDialog.setMessage("로그인 중입니다...");
@@ -189,8 +185,17 @@ public class LoginPageFragment extends Fragment {
 	               alertDialog.show();
 	            }
 	         }
-	      });
 
+			@Override
+			public void onAddCompareTaskDone(boolean isAddCompareSuccess) {}
+
+			@Override
+			public void onAddEstimateTaskDone(boolean isAddEstimateSuccess) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+	      });
 	      loginTask.execute();
 	   }
 

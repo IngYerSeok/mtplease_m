@@ -7,9 +7,10 @@
     <string name="title_section3">견적페이지</string>
     <string name="title_section4">마이페이지</string>
     <string name="action_settings">설정</string>
-    <string name="text_facebook_login">로그인</string>
-    <string name="text_sign_in">회원가입</string>
-
+    <string name="text_facebook_login"><u>로그인</u></string>
+    <string name="text_login"><u>로그인</u></string>
+    <string name="text_sign_in"><u>회원가입</u></string>
+    <string name="text_sign_up"><u>가입하기</u></string>
     <string name="location_select">어디로?</string>
     <string-array name="location_array">
         <item>대성리로</item>

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/branding_color1"
+    android:background="@color/branding_color3"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -36,7 +36,7 @@
 
             <EditText
                 android:id="@+id/editText_address_email"
-                android:layout_width="200dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="mtplease@owo.com"
@@ -61,7 +61,7 @@
 
             <EditText
                 android:id="@+id/editText_password"
-                android:layout_width="200dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="영문 대소문자 및 특수문자"
@@ -86,7 +86,7 @@
 
             <EditText
                 android:id="@+id/editText_password_confirm"
-                android:layout_width="200dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="비밀번호 재입력"
@@ -172,8 +172,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
-        android:background="@drawable/button_white_large"
-        android:text="가입하기"
-        android:textSize="20sp" />
+        android:background="@drawable/button_skyblue_large"
+        android:text="@string/text_sign_up"
+        android:textSize="25sp" />
 
 </LinearLayout>

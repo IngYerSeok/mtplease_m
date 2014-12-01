@@ -1,7 +1,10 @@
 package com.owo.android.mtPlease;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.Fragment;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Toast;
@@ -20,25 +23,30 @@ public class WebViewJavascriptInterface {
 		mContext = activity;
 		mFragment = fragment;
 	}
-
-	/**
-	 * 안드로이드 토스트를 출력한다. Time Long.
-	 * 
-	 * @param message : 메시지
-	 */
+	
 	@JavascriptInterface
-	public void toastLong(String message) {
-		Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+	public void addCompareList(String rooms){
+		Log.i("from jquery", rooms);
+		((MainFragment) mFragment).addCompareList(rooms);
+	}
+	
+	@JavascriptInterface
+	public void addEstimateRoom(String rooms) {
+		((MainFragment) mFragment).addEstimateRoom(rooms);
 	}
 
-	/**
-	 * 안드로이드 토스트를 출력한다. Time Short.
-	 * 
-	 * @param message : 메시지
-	 */
 	@JavascriptInterface
-	public void toastShort(String message) { // Show toast for a short time
-		//Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-		((MainFragment) mFragment).toastShort(message);
+	public void addEstimateAlcohol(String alcohol) {
+		((EstimateFragment) mFragment).addEstimateAlcohol(alcohol);
+	}
+
+	@JavascriptInterface
+	public void addEstimateBarbecue(String barbecue) {
+		((EstimateFragment) mFragment).addEstimateBarbecue(barbecue);
+	}
+
+	@JavascriptInterface
+	public void addEstimateOther(String other) {
+		((EstimateFragment) mFragment).addEstimateOther(other);
 	}
 }

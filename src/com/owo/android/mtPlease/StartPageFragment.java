@@ -25,7 +25,7 @@ public class StartPageFragment extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				LoginPageFragment loginPageFragment = new LoginPageFragment();
-				loadPageFragment(loginPageFragment);
+				loadPageFragment(loginPageFragment, "LOGIN_PAGE_FRAGMENT");
 			}
         	
         });
@@ -37,7 +37,7 @@ public class StartPageFragment extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				SignUpPageFragment signUpPageFragment = new SignUpPageFragment();
-				loadPageFragment(signUpPageFragment);
+				loadPageFragment(signUpPageFragment, "SIGNUP_PAGE_FRAGMENT");
 			}
         	
         });
@@ -45,10 +45,10 @@ public class StartPageFragment extends Fragment {
 		return startPageView;
 	}
 	
-	public void loadPageFragment(Fragment fragment) {
+	public void loadPageFragment(Fragment fragment, String fragmentTag) {
 		FragmentTransaction transaction = getFragmentManager()
 				.beginTransaction();
-		transaction.replace(R.id.layout_loading_fragments, fragment);
+		transaction.replace(R.id.layout_loading_fragments, fragment, fragmentTag).addToBackStack(fragmentTag);
 
 		transaction.commit();
 	}

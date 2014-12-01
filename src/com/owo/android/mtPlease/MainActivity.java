@@ -35,6 +35,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.AsyncTask;
@@ -47,9 +48,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,9 +61,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 public class MainActivity extends SlidingActivity implements
-		ActionBar.TabListener, CalendarDialogFragment.OnDateConfirmedListener, FragmentCommunicator {
+		ActionBar.TabListener, CalendarDialogFragment.OnDateConfirmedListener,
+		FragmentCommunicator {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -70,9 +73,9 @@ public class MainActivity extends SlidingActivity implements
 	 * {@link android.support.v13.app.FragmentStatePagerAdapter}.
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
-	
+
 	private final long FINISH_INTERVAL_TIME = 2000;
-	long firstBackPressedTime = 0;
+	private long firstBackPressedTime = 0;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -82,12 +85,13 @@ public class MainActivity extends SlidingActivity implements
 	private Calendar cal = Calendar.getInstance();
 	// 선택한 날짜를 저장하기 위한 변수. 초기 값은 현재 날짜이다.
 	private String modifiedDate = cal.get(Calendar.YEAR) + "년 "
-			+ (cal.get(Calendar.MONTH)+1) + "월 " + cal.get(Calendar.DATE) + "일";
+			+ (cal.get(Calendar.MONTH) + 1) + "월 " + cal.get(Calendar.DATE)
+			+ "일";
 
 	/**
 	 * UI component들
 	 */
-	Button searchDrawerCloseButton;
+	ImageButton searchDrawerCloseButton;
 	Spinner locationSelectSpinner;
 	Button datePickerButton;
 	ImageButton searchButton;
@@ -97,13 +101,13 @@ public class MainActivity extends SlidingActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
 
 		// Set up the action bar
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		// setting for the sidedrawer
 		// set the content view
@@ -113,7 +117,7 @@ public class MainActivity extends SlidingActivity implements
 		getSlidingMenu().setShadowDrawable(R.drawable.shadow);
 		getSlidingMenu().setFadeDegree(0.90f);
 
-		searchDrawerCloseButton = (Button) findViewById(R.id.button_search_drawer_close);
+		searchDrawerCloseButton = (ImageButton) findViewById(R.id.button_search_drawer_close);
 		searchDrawerCloseButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -156,7 +160,7 @@ public class MainActivity extends SlidingActivity implements
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
-		
+
 		locationSelectSpinner = (Spinner) findViewById(R.id.spinner_location);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
 				this, R.array.location_array, R.layout.spinner_text);
@@ -179,37 +183,38 @@ public class MainActivity extends SlidingActivity implements
 			}
 
 		});
-		// Activity가 실행될 때 받아온 emailAddress(SESSION_ID)를 받아서 MyPageFragment에 보내준다.
-
-
+		// Activity가 실행될 때 받아온 emailAddress(SESSION_ID)를 받아서 MyPageFragment에
+		// 보내준다.
 
 		// 검색 버튼 설정 부분
-		searchButton = (ImageButton)findViewById(R.id.imageButton_search);
+		searchButton = (ImageButton) findViewById(R.id.imageButton_search);
 		searchButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				String region = locationSelectSpinner.getSelectedItem().toString();
-				if(region.equals("대성리로")){
+				String region = locationSelectSpinner.getSelectedItem()
+						.toString();
+				if (region.equals("대성리로")) {
 					region = "1";
-				}
-				else if(region.equals("청평으로")){
+				} else if (region.equals("청평으로")) {
 					region = "2";
-				}
-				else {
+				} else {
 					region = "3";
 				}
-				
-				String people = ((EditText) findViewById(R.id.editText_numberPeople)).getText()
-						.toString();
-				
-				String[] tmp = (datePickerButton.getText().toString()).split(" ");
-				String date = tmp[0].substring(0, 4) + "-" + tmp[1].substring(0, 2) + "-" + tmp[2].substring(0, 2);
-				
-				String query = "?region="+region+"&people="+people+"&date="+date+"&flag=1";
+
+				String people = ((EditText) findViewById(R.id.editText_numberPeople))
+						.getText().toString();
+
+				String[] tmp = (datePickerButton.getText().toString())
+						.split(" ");
+				String date = tmp[0].substring(0, 4) + "-"
+						+ tmp[1].substring(0, 2) + "-" + tmp[2].substring(0, 2);
+
+				String query = "?region=" + region + "&people=" + people
+						+ "&date=" + date + "&flag=1";
 				sendInfoToFragment(query, 0);
-					
+
 				getSlidingMenu().showContent();
 			}
 
@@ -221,8 +226,10 @@ public class MainActivity extends SlidingActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu items for use in the action bar
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main, menu);
+		/*
+		 * MenuInflater inflater = getMenuInflater();
+		 * inflater.inflate(R.menu.main, menu);
+		 */
 
 		getSlidingMenu().toggle();
 
@@ -238,9 +245,9 @@ public class MainActivity extends SlidingActivity implements
 		case android.R.id.home:
 			getSlidingMenu().toggle();
 			return true;
-		case R.id.action_settings:
-			openSetting();
-			return true;
+			/*
+			 * case R.id.action_settings: openSetting(); return true;
+			 */
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -270,18 +277,25 @@ public class MainActivity extends SlidingActivity implements
 	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 		private MainFragment mMainFragment;
-        private MyPageFragment mMyPageFragment;
-        private CompareFragment mCompareFragment;
-        private EstimateFragment mEstimateFragment;
-        
+		private MyPageFragment mMyPageFragment;
+		private CompareFragment mCompareFragment;
+		private EstimateFragment mEstimateFragment;
+
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
-			this.mMainFragment = (MainFragment) PlaceholderFragment.newInstance(0 + 1);
-            this.mCompareFragment = (CompareFragment) PlaceholderFragment.newInstance(1 + 1);
-            this.mEstimateFragment = (EstimateFragment) PlaceholderFragment.newInstance(2 + 1);
-            this.mMyPageFragment = (MyPageFragment) PlaceholderFragment.newInstance(3 + 1);
-			
+			this.mMainFragment = (MainFragment) PlaceholderFragment
+					.newInstance(0 + 1);
+			this.mCompareFragment = (CompareFragment) PlaceholderFragment
+					.newInstance(1 + 1);
+			this.mEstimateFragment = (EstimateFragment) PlaceholderFragment
+					.newInstance(2 + 1);
+			this.mMyPageFragment = (MyPageFragment) PlaceholderFragment
+					.newInstance(3 + 1);
+
 			extras = getIntent().getExtras();
+			this.mMainFragment.setArguments(extras);
+			this.mCompareFragment.setArguments(extras);
+			this.mEstimateFragment.setArguments(extras);
 			this.mMyPageFragment.setArguments(extras);
 		}
 
@@ -341,7 +355,7 @@ public class MainActivity extends SlidingActivity implements
 		/**
 		 * Returns a new instance of this fragment for the given section number.
 		 */
-		
+
 		public static Fragment newInstance(int sectionNumber) {
 			Fragment selectedFragment = null;
 			Log.i("MainActivity - newInstance", "" + sectionNumber);
@@ -361,7 +375,7 @@ public class MainActivity extends SlidingActivity implements
 				break;
 			}
 			Bundle args = new Bundle();
-			args.putInt(ARG_SECTION_NUMBER, sectionNumber);			
+			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 			selectedFragment.setArguments(args);
 
 			return selectedFragment;
@@ -377,65 +391,62 @@ public class MainActivity extends SlidingActivity implements
 		long tempTime = System.currentTimeMillis();
 		long intervalTime = tempTime - firstBackPressedTime;
 
-		
 		int fragmentPosition = mViewPager.getCurrentItem();
-		Fragment webViewFragment = mSectionsPagerAdapter.getItem(fragmentPosition);
+		Fragment webViewFragment = mSectionsPagerAdapter
+				.getItem(fragmentPosition);
 		if (webViewFragment instanceof MainFragment) {
-			if(((MainFragment) webViewFragment).getWebViewCanGoBack()) 
+			if (((MainFragment) webViewFragment).getWebViewCanGoBack())
 				((MainFragment) webViewFragment).enableWebViewBack();
 			else {
 				finishAppOnBackDoublePressed(tempTime, intervalTime);
 			}
-		}
-		else if(webViewFragment instanceof CompareFragment) {
-			if(((CompareFragment) webViewFragment).getWebViewCanGoBack()) 
+		} else if (webViewFragment instanceof CompareFragment) {
+			if (((CompareFragment) webViewFragment).getWebViewCanGoBack())
 				((CompareFragment) webViewFragment).enableWebViewBack();
 			else {
 				finishAppOnBackDoublePressed(tempTime, intervalTime);
 			}
-		}
-		else if(webViewFragment instanceof EstimateFragment) {
-			if(((EstimateFragment) webViewFragment).getWebViewCanGoBack()) 
+		} else if (webViewFragment instanceof EstimateFragment) {
+			if (((EstimateFragment) webViewFragment).getWebViewCanGoBack())
 				((EstimateFragment) webViewFragment).enableWebViewBack();
 			else {
 				finishAppOnBackDoublePressed(tempTime, intervalTime);
 			}
-		}
-		else if(webViewFragment instanceof MyPageFragment) {
-			if(((MyPageFragment) webViewFragment).getWebViewCanGoBack()) 
+		} else if (webViewFragment instanceof MyPageFragment) {
+			if (((MyPageFragment) webViewFragment).getWebViewCanGoBack())
 				((MyPageFragment) webViewFragment).enableWebViewBack();
 			else {
 				finishAppOnBackDoublePressed(tempTime, intervalTime);
 			}
 		}
 	}
-	
+
 	public void finishAppOnBackDoublePressed(long tempTime, long intervalTime) {
 		if (intervalTime >= 0 && FINISH_INTERVAL_TIME >= intervalTime) {
 			finish();
 		} else {
 			firstBackPressedTime = tempTime;
-			Toast.makeText(getApplicationContext(), "'뒤로'버튼을 한 번 더 누르시면 종료됩니다.",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(),
+					"'뒤로' 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
 		}
 	}
 
-	public void openSetting() {
-		SettingsFragment settingFragment = new SettingsFragment();
-		FragmentTransaction transaction = getFragmentManager()
-				.beginTransaction();
-
-		transaction.replace(android.R.id.content, settingFragment);
-
-		transaction.commit();
-	}
+	/*
+	 * public void openSetting() { SettingsFragment settingFragment = new
+	 * SettingsFragment(); FragmentTransaction transaction =
+	 * getFragmentManager() .beginTransaction();
+	 * 
+	 * transaction.replace(android.R.id.content, settingFragment);
+	 * 
+	 * transaction.commit(); }
+	 */
 
 	@Override
 	public void onDateConfirmButtonClicked(String dateSelected) {
 		// TODO Auto-generated method stub
 		datePickerButton.setText(dateSelected);
 	}
-	
+
 	// AsyncTask<Params,Progress,Result>
 	private class SearchTask extends AsyncTask<String, Void, HttpResponse> {
 
@@ -448,25 +459,25 @@ public class MainActivity extends SlidingActivity implements
 			HttpConnectionParams.setConnectionTimeout(httpclient.getParams(),
 					10000);
 			HttpResponse response = null;
-			
+
 			String region = locationSelectSpinner.getSelectedItem().toString();
-			if(region.equals("대성리로")){
+			if (region.equals("대성리로")) {
 				region = "1";
-			}
-			else if(region.equals("청평으로")){
+			} else if (region.equals("청평으로")) {
 				region = "2";
-			}
-			else {
+			} else {
 				region = "3";
 			}
-			
-			String people = ((EditText) findViewById(R.id.editText_numberPeople)).getText()
-					.toString();
-			
+
+			String people = ((EditText) findViewById(R.id.editText_numberPeople))
+					.getText().toString();
+
 			String[] tmp = (datePickerButton.getText().toString()).split(" ");
-			String date = tmp[0].substring(0, 4) + "-" + tmp[1].substring(0, 2) + "-" + tmp[2].substring(0, 2);
-			
-			String query = "?region="+region+"&people="+people+"&date="+date+"&flag=1";
+			String date = tmp[0].substring(0, 4) + "-" + tmp[1].substring(0, 2)
+					+ "-" + tmp[2].substring(0, 2);
+
+			String query = "?region=" + region + "&people=" + people + "&date="
+					+ date + "&flag=1";
 			sendInfoToFragment(query, 0);
 			// Add your data
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -519,21 +530,38 @@ public class MainActivity extends SlidingActivity implements
 	}
 
 	@Override
-	public void sendInfoToFragment(String string, int position){
+	public void sendInfoToFragment(String string, int position) {
 		switch (position) {
 		case 0:
-			MainFragment mainfrag = (MainFragment) mSectionsPagerAdapter.getItem(position);
+			MainFragment mainfrag = (MainFragment) mSectionsPagerAdapter
+					.getItem(position);
 			mainfrag.refreshPage(string);
 			break;
 		case 1:
-			CompareFragment comparefrag = (CompareFragment) mSectionsPagerAdapter.getItem(position);
+			CompareFragment comparefrag = (CompareFragment) mSectionsPagerAdapter
+					.getItem(position);
+			comparefrag.addCompareList(string);
 			break;
 		case 2:
-			EstimateFragment estimatefrag = (EstimateFragment) mSectionsPagerAdapter.getItem(position);
+			EstimateFragment estimatefrag = (EstimateFragment) mSectionsPagerAdapter
+					.getItem(position);
+			estimatefrag.addEstimateRoom(string);
 			break;
 		case 3:
-			MyPageFragment mypagefrag = (MyPageFragment) mSectionsPagerAdapter.getItem(position);
+			MyPageFragment mypagefrag = (MyPageFragment) mSectionsPagerAdapter
+					.getItem(position);
 			break;
 		}
+	}
+
+	/**
+	 * @author In-Ho 사용자가 edittext부분 이외의 화면을 터치했을 때 키보드를 없애고 포커스를 제거하기 위한 메소드
+	 */
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+		return true;
 	}
 }
