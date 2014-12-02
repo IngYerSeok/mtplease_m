@@ -425,7 +425,7 @@ public class MainActivity extends SlidingActivity implements
 			finish();
 		} else {
 			firstBackPressedTime = tempTime;
-			Toast.makeText(getApplicationContext(),
+			Toast.makeText(this,
 					"'뒤로' 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
 		}
 	}

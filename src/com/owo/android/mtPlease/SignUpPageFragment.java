@@ -104,8 +104,54 @@ public class SignUpPageFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				startSignUpTask();
+				if (isValidEmailAddress(emailAddress.getText().toString())) {
+					if (isPasswordEqual(password.getText().toString(),
+							passwordConfirm.getText().toString())) {
+						if (isValidPassword(password.getText().toString())) {
+							startSignUpTask();
+						} else {
+							Log.i("signup", "not valid password");
+							Toast.makeText(getActivity(),
+									"비밀번호는 최소 6자리 이상이여야 합니다.",
+									Toast.LENGTH_SHORT).show();
+							// toast 비밀번호는 최소 6자리 이상이여야 합니다.
+						}
+					} else {
+						Log.i("signup", "not password equal");
+						// toast 비밀번호가 일치하지 않습니다.
+						Toast.makeText(getActivity(), "비밀번호가 일치하지 않습니다.",
+								Toast.LENGTH_SHORT).show();
+					}
+				} else {
+					Log.i("signup", "not valid emailAddress");
+					// toast 유효하지 않은 이메일 형식입니다.
+					Toast.makeText(getActivity(), "유효하지 않은 이메일 형식입니다.",
+							Toast.LENGTH_SHORT).show();
+				}
+			}
 
+			private boolean isValidPassword(String password) {
+				if (password.length() >= 6) {
+					return true;
+				}
+				return false;
+			}
+
+			private boolean isPasswordEqual(String password,
+					String passwordConfirm) {
+				if (password.compareTo(passwordConfirm) == 0) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+			private boolean isValidEmailAddress(String email) {
+				String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+				java.util.regex.Pattern p = java.util.regex.Pattern
+						.compile(ePattern);
+				java.util.regex.Matcher m = p.matcher(email);
+				return m.matches();
 			}
 
 		});
@@ -160,8 +206,7 @@ public class SignUpPageFragment extends Fragment {
 					break;
 				case SIGNUP_UNSUCCESSFUL:
 				default:
-					alertDialogBuilder
-							.setMessage("동일한 ID가 존재합니다. 다시 가입해주세요.");
+					alertDialogBuilder.setMessage("동일한 ID가 존재합니다. 다시 가입해주세요.");
 					alertDialogBuilder.setTitle("가입 실패");
 					alertDialogBuilder.setCancelable(false);
 					alertDialogBuilder.setPositiveButton("확인",
