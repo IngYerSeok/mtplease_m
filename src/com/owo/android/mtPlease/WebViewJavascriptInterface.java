@@ -49,4 +49,14 @@ public class WebViewJavascriptInterface {
 	public void addEstimateOther(String other) {
 		((EstimateFragment) mFragment).addEstimateOther(other);
 	}
+	
+	@JavascriptInterface
+	public void addEstimateDeletedRoom(String deletedRoom) {
+		((EstimateFragment) mFragment).setDeletedRoom(deletedRoom);
+	}
+	
+	@JavascriptInterface
+	public void addCompareDeletedRoom(String deletedRoom) {
+		((CompareFragment) mFragment).setDeletedRoom(deletedRoom);
+	}
 }

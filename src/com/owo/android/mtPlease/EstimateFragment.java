@@ -41,7 +41,7 @@ public class EstimateFragment extends Fragment {
 	View progressBarBackground;
 	Drawable pbBackground;
 	private String user_id;
-	
+
 	private String stringifiedAlcoholData;
 	private String stringifiedBarbecueData;
 	private String stringifiedOthersData;
@@ -49,6 +49,8 @@ public class EstimateFragment extends Fragment {
 	final static int ALCOHOL = 0;
 	final static int BARBECUE = 1;
 	final static int OTHERS = 2;
+	
+	private String deletedRoom;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,7 +71,8 @@ public class EstimateFragment extends Fragment {
 				.findViewById(R.id.webViewEstimate);
 		WebSettings webSettings = webViewEstimate.getSettings();
 		webSettings.setJavaScriptEnabled(true);
-		webViewEstimate.setWebViewClient(new CustomWebViewClient(mProgressBar, pbBackground));
+		webViewEstimate.setWebViewClient(new CustomWebViewClient(mProgressBar,
+				pbBackground));
 		webViewEstimate.setWebChromeClient(new WebChromeClient());
 		mWebViewInterface = new WebViewJavascriptInterface(getActivity(), this);
 		webViewEstimate.addJavascriptInterface(mWebViewInterface,
@@ -98,44 +101,53 @@ public class EstimateFragment extends Fragment {
 		}
 	}
 
-	   
+	public void addEstimateRoom(String room) {
+		Log.i("estimate room", room);
+		startAddEstimateRoom(1, room);
+	}
 
-	   public void addEstimateRoom(String room) {
-	      Log.i("estimate room", room);
-	      startAddEstimateRoom(1, room);   
-	   }
-	   
-	   public void addEstimateAlcohol(String alcohol){
-	      Log.i("estimate alcol", alcohol);
-	      startAddEstimateRoom(2, alcohol);
-	   }
-	   
-	   public void addEstimateBarbecue(String barbecue){
-	      Log.i("estimate bbq", barbecue);
-	      startAddEstimateRoom(3, barbecue);
-	   }
-	   
-	   public void addEstimateOther(String other){
-	      Log.i("estimate other", other);
-	      startAddEstimateRoom(4, other);
-	   }
-	   
-	   public void startAddEstimateRoom(int flag, String string){
-	      AddEstimateTask mAddEstimateTask = new AddEstimateTask(flag, string, new FragmentCallback(){
-	         
-	         @Override
-	         public void onTaskDone(boolean isLoginSuccess, String emailAddress) {};
+	public void addEstimateAlcohol(String alcohol) {
+		Log.i("estimate alcol", alcohol);
+		startAddEstimateRoom(2, alcohol);
+	}
 
-	         @Override
-	         public void onAddCompareTaskDone(boolean isAddCompareSuccess) {};
-	         
-	         @Override
-	         public void onAddEstimateTaskDone(boolean isAddEstimateSuccess) {
-	            webViewEstimate.loadUrl("http://mtplease.herokuapp.com/pensions/estimate_m?user_id=" + user_id);
-	         }
-	      });
-	      mAddEstimateTask.execute();
-	   }
+	public void addEstimateBarbecue(String barbecue) {
+		Log.i("estimate bbq", barbecue);
+		startAddEstimateRoom(3, barbecue);
+	}
+
+	public void addEstimateOther(String other) {
+		Log.i("estimate other", other);
+		startAddEstimateRoom(4, other);
+	}
+
+	public void setDeletedRoom(String deletedRoom) {
+		this.deletedRoom = deletedRoom;
+	}
+
+	public void startAddEstimateRoom(int flag, String string) {
+		AddEstimateTask mAddEstimateTask = new AddEstimateTask(flag, string,
+				new FragmentCallback() {
+
+					@Override
+					public void onTaskDone(boolean isLoginSuccess,
+							String emailAddress) {
+					};
+
+					@Override
+					public void onAddCompareTaskDone(boolean isAddCompareSuccess) {
+					};
+
+					@Override
+					public void onAddEstimateTaskDone(
+							boolean isAddEstimateSuccess) {
+						webViewEstimate
+								.loadUrl("http://mtplease.herokuapp.com/pensions/estimate_m?user_id="
+										+ user_id);
+					}
+				});
+		mAddEstimateTask.execute();
+	}
 
 	// AsyncTask<Params,Progress,Result>
 	private class AddEstimateTask extends AsyncTask<String, Void, HttpResponse> {

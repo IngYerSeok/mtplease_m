@@ -44,6 +44,7 @@ public class CompareFragment extends Fragment {
 	Drawable pbBackground;
 	private String user_id;
 	private String rooms;
+	private String deletedRoom;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,6 +99,10 @@ public class CompareFragment extends Fragment {
 		Log.i("addcompare", this.rooms);
 		startAddCompare();
 
+	}
+	
+	public void setDeletedRoom(String deletedRoom) {
+		this.deletedRoom = deletedRoom;
 	}
 
 	public void startAddCompare() {
