@@ -419,11 +419,13 @@ public class MainActivity extends SlidingActivity implements
 				finishAppOnBackDoublePressed(tempTime, intervalTime);
 			}
 		} else if (webViewFragment instanceof MyPageFragment) {
+			/*
 			if (((MyPageFragment) webViewFragment).getWebViewCanGoBack())
 				((MyPageFragment) webViewFragment).enableWebViewBack();
 			else {
+			*/
 				finishAppOnBackDoublePressed(tempTime, intervalTime);
-			}
+			//}
 		}
 	}
 

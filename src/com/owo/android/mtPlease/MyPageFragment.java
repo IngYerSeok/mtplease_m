@@ -24,6 +24,9 @@ public class MyPageFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		View myPageView = inflater.inflate(R.layout.fragment_info_mtplease, container,
+				false);
+		/*
 		View myPageView = inflater.inflate(R.layout.fragment_mypage, container,
 				false);
 		
@@ -45,11 +48,11 @@ public class MyPageFragment extends Fragment {
 		webViewMyPage.addJavascriptInterface(mWebViewInterface, "MyPageFragment");
 		webViewMyPage.loadUrl("http://mtplease.herokuapp.com/members/myPage_m?user_id=" + getArguments().getString("SESSION_ID"));		
 		Log.i("MyPageFragment - onCreateView", "loaded");
-
+		 */
 		// TODO Auto-generated method stub
 		return myPageView;
 	}
-
+	/*
 	public boolean getWebViewCanGoBack() {
 		if(webViewMyPage != null)
 			return webViewMyPage.canGoBack();
@@ -60,4 +63,5 @@ public class MyPageFragment extends Fragment {
 	public void enableWebViewBack() {
 			webViewMyPage.goBack();
 	}
+	*/
 }
