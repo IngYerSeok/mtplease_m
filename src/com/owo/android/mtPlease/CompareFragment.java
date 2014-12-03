@@ -34,6 +34,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class CompareFragment extends Fragment {
 
@@ -103,6 +104,47 @@ public class CompareFragment extends Fragment {
 	
 	public void setDeletedRoom(String deletedRoom) {
 		this.deletedRoom = deletedRoom;
+		Log.i("compare delete room", deletedRoom);
+		startDeletecompare();
+	}
+
+	private void startDeletecompare() {
+		DeleteCompareTask mDeleteCompareTask = new DeleteCompareTask(
+				new FragmentCallback() {
+
+					@Override
+					public void onTaskDone(boolean isLoginSuccess,
+							String emailAddress) {
+					};
+
+					@Override
+					public void onAddCompareTaskDone(boolean isAddCompareSuccess) {
+						webViewCompare
+								.loadUrl("http://mtplease.herokuapp.com/pensions/compare_m?user_id="
+										+ user_id);
+					}
+					
+					@Override
+					public void onDeleteCompareTaskDone(boolean isDeleteCompareSuccess) {
+						Toast.makeText(getActivity(), "펜션 정보가 삭제 되었습니다.", Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onAddEstimateTaskDone(
+							boolean isAddEstimateSuccess) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onDeleteEstimateTaskDone(
+							boolean isDeleteEstimateSuccess) {
+						// TODO Auto-generated method stub
+						
+					}
+
+				});
+		mDeleteCompareTask.execute();
 	}
 
 	public void startAddCompare() {
@@ -124,6 +166,20 @@ public class CompareFragment extends Fragment {
 					@Override
 					public void onAddEstimateTaskDone(
 							boolean isAddEstimateSuccess) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onDeleteCompareTaskDone(
+							boolean isDeleteCompareSuccess) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onDeleteEstimateTaskDone(
+							boolean isDeleteEstimateSuccess) {
 						// TODO Auto-generated method stub
 						
 					}
@@ -199,6 +255,78 @@ public class CompareFragment extends Fragment {
 			// super.onPostExecute(result);
 			try {
 				mFragmentCallback.onAddCompareTaskDone(isAddCompareSuccess);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	// AsyncTask<Params,Progress,Result>
+	private class DeleteCompareTask extends AsyncTask<String, Void, HttpResponse> {
+		private FragmentCallback mFragmentCallback;
+		private boolean isDeleteCompareSuccess = false;
+		private JSONObject o;
+
+		public DeleteCompareTask(FragmentCallback fragmentCallback) {
+			mFragmentCallback = fragmentCallback;
+		}
+
+		@Override
+		protected HttpResponse doInBackground(String... urls) {
+
+			HttpPost httppost = new HttpPost(
+					"http://mtplease.herokuapp.com/pensions/compare_m/delete");
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpConnectionParams.setConnectionTimeout(httpclient.getParams(),
+					10000);
+			HttpResponse response = null;
+			// Add your data
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+			nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
+			nameValuePairs.add(new BasicNameValuePair("rooms", deletedRoom));
+			try {
+				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs,
+						"utf-8"));
+				// Execute HTTP Post Request
+				response = httpclient.execute(httppost);
+
+				BufferedReader rd = new BufferedReader(new InputStreamReader(
+						response.getEntity().getContent()));
+				StringBuffer result = new StringBuffer();
+				String line = "";
+				while ((line = rd.readLine()) != null) {
+					result.append(line);
+				}
+				o = new JSONObject(result.toString());
+				Log.i("???why?", o.get("result").toString());
+
+				if (o.get("result").toString() == "true") {
+					isDeleteCompareSuccess = true;
+				}
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return response;
+		}
+
+		@Override
+		protected void onPostExecute(HttpResponse result) {
+			// super.onPostExecute(result);
+			try {
+				mFragmentCallback.onDeleteCompareTaskDone(isDeleteCompareSuccess);
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			}

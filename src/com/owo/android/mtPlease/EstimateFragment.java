@@ -32,6 +32,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class EstimateFragment extends Fragment {
 
@@ -100,32 +101,119 @@ public class EstimateFragment extends Fragment {
 			webViewEstimate.goBack();
 		}
 	}
+	
+	public void loadEstimate() {
+		// TODO Auto-generated method stub
+		new LoadOverallEstimateTask().execute();
+	}
+	
+	// AsyncTask<Params,Progress,Result>
+	private class LoadOverallEstimateTask extends
+			AsyncTask<String, Void, HttpResponse> {
+		
+		@Override
+		protected HttpResponse doInBackground(String... arg0) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(HttpResponse result) {
+			// super.onPostExecute(result);
+			try {
+				webViewEstimate
+				.loadUrl("http://mtplease.herokuapp.com/pensions/estimate_m/overall?user_id="
+						+ user_id);
+				
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public void addEstimateRoom(String room) {
 		Log.i("estimate room", room);
-		startAddEstimateRoom(1, room);
+		startAddEstimate(1, room);
+		
 	}
 
 	public void addEstimateAlcohol(String alcohol) {
 		Log.i("estimate alcol", alcohol);
-		startAddEstimateRoom(2, alcohol);
+		startAddEstimate(2, alcohol);
+		clearWebViewHistory();
 	}
 
 	public void addEstimateBarbecue(String barbecue) {
 		Log.i("estimate bbq", barbecue);
-		startAddEstimateRoom(3, barbecue);
+		startAddEstimate(3, barbecue);
+		clearWebViewHistory();
 	}
 
 	public void addEstimateOther(String other) {
 		Log.i("estimate other", other);
-		startAddEstimateRoom(4, other);
+		startAddEstimate(4, other);
+		clearWebViewHistory();
 	}
 
 	public void setDeletedRoom(String deletedRoom) {
-		this.deletedRoom = deletedRoom;
+		Log.i("delete estimate room", deletedRoom);
+		startDeleteEstimate(1, deletedRoom);
+		clearWebViewHistory();
+	}
+	
+	private void clearWebViewHistory() {
+	      webViewEstimate.clearHistory();
+	   }
+
+	public void setDeletedAlcohol(String alcohol) {
+		Log.i("delete estimate alcol", alcohol);
+		startDeleteEstimate(2, alcohol);
 	}
 
-	public void startAddEstimateRoom(int flag, String string) {
+	public void setDeletedBarbecue(String barbecue) {
+		Log.i("delete estimate bbq", barbecue);
+		startDeleteEstimate(3, barbecue);
+	}
+
+	public void setDeletedOther(String other) {
+		Log.i("delete estimate other", other);
+		startDeleteEstimate(4, other);
+	}
+	
+	private void startDeleteEstimate(int flag, String string) {
+		// TODO Auto-generated method stub
+		DeleteEstimateTask mDeleteEstimateTask = new DeleteEstimateTask(flag, string,
+				new FragmentCallback() {
+
+					@Override
+					public void onTaskDone(boolean isLoginSuccess,
+							String emailAddress) {
+					};
+
+					@Override
+					public void onAddCompareTaskDone(boolean isAddCompareSuccess) {
+					};
+
+					@Override
+					public void onAddEstimateTaskDone(
+							boolean isAddEstimateSuccess) {	};
+
+					@Override
+					public void onDeleteCompareTaskDone(
+							boolean isDeleteCompareSuccess) {
+						// TODO Auto-generated method stub
+						
+					};
+					
+					@Override
+					public void onDeleteEstimateTaskDone(boolean isDeleteEstimateSuccess) {
+						Toast.makeText(getActivity(), "정상적으로 견적 정보가 삭제되었습니다", Toast.LENGTH_SHORT).show();
+					}
+				});
+		mDeleteEstimateTask.execute();
+	}
+
+	public void startAddEstimate(int flag, String string) {
 		AddEstimateTask mAddEstimateTask = new AddEstimateTask(flag, string,
 				new FragmentCallback() {
 
@@ -144,6 +232,20 @@ public class EstimateFragment extends Fragment {
 						webViewEstimate
 								.loadUrl("http://mtplease.herokuapp.com/pensions/estimate_m?user_id="
 										+ user_id);
+					}
+
+					@Override
+					public void onDeleteCompareTaskDone(
+							boolean isDeleteCompareSuccess) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onDeleteEstimateTaskDone(
+							boolean isDeleteEstimateSuccess) {
+						// TODO Auto-generated method stub
+						
 					}
 				});
 		mAddEstimateTask.execute();
@@ -251,4 +353,109 @@ public class EstimateFragment extends Fragment {
 			}
 		}
 	}
+	
+	// AsyncTask<Params,Progress,Result>
+	private class DeleteEstimateTask extends AsyncTask<String, Void, HttpResponse> {
+		private FragmentCallback mFragmentCallback;
+		private boolean isDeleteEstimateSuccess = false;
+		private JSONObject o;
+		private int flag;
+		private String message;
+
+		public DeleteEstimateTask(int flag, String sendmessage,
+				FragmentCallback fragmentCallback) {
+			mFragmentCallback = fragmentCallback;
+			this.flag = flag;
+			this.message = sendmessage;
+		}
+
+		@Override
+		protected HttpResponse doInBackground(String... urls) {
+			HttpPost httppost = null;
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpConnectionParams.setConnectionTimeout(httpclient.getParams(),
+					10000);
+			HttpResponse response = null;
+
+			// Add your data
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+			nameValuePairs.add(new BasicNameValuePair("user_id", user_id));
+			switch (flag) {
+			case 1: {
+				nameValuePairs.add(new BasicNameValuePair("room", message));
+				httppost = new HttpPost(
+						"http://mtplease.herokuapp.com/pensions/estimate_m/room/delete");
+				break;
+			}
+
+			case 2: {
+				nameValuePairs.add(new BasicNameValuePair("alcohol", message));
+				httppost = new HttpPost(
+						"http://mtplease.herokuapp.com/pensions/estimate_m/alcohol/delete");
+				break;
+			}
+			case 3: {
+				nameValuePairs.add(new BasicNameValuePair("barbecue", message));
+				httppost = new HttpPost(
+						"http://mtplease.herokuapp.com/pensions/estimate_m/barbecue/delete");
+				break;
+			}
+			case 4: {
+				nameValuePairs.add(new BasicNameValuePair("other", message));
+				httppost = new HttpPost(
+						"http://mtplease.herokuapp.com/pensions/estimate_m/other/delete");
+				break;
+			}
+			}
+			try {
+				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs,
+						"utf-8"));
+				// Execute HTTP Post Request
+				response = httpclient.execute(httppost);
+
+				BufferedReader rd = new BufferedReader(new InputStreamReader(
+						response.getEntity().getContent()));
+				StringBuffer result = new StringBuffer();
+				String line = "";
+				while ((line = rd.readLine()) != null) {
+					result.append(line);
+				}
+				
+				o = new JSONObject(result.toString());
+				Log.i("???why?", o.get("result").toString());
+				
+				if (o.get("result").toString() == "true") {
+					isDeleteEstimateSuccess = true;
+				}
+
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return response;
+		}
+
+		@Override
+		protected void onPostExecute(HttpResponse result) {
+			// super.onPostExecute(result);
+			try {
+				mFragmentCallback.onDeleteEstimateTaskDone(isDeleteEstimateSuccess);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

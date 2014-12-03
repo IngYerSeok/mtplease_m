@@ -51,13 +51,17 @@ public class LoginPageFragment extends Fragment {
 				container, false);
 
 		// 이메일 주소 텍스트에디트
+		/*
 		emailAddress = (EditText) loginPageView
 				.findViewById(R.id.editText_emailAddress);
 		emailAddress.setText("cto.owo@gmail.com");
+		*/
 		// 비밀번호 텍스트에디트
+		/*
 		password = (EditText) loginPageView
 				.findViewById(R.id.editText_password);
 		password.setText("1234");
+		 */
 
 		Button confirmLoginButton = (Button) loginPageView
 				.findViewById(R.id.button_login_confirm);
@@ -191,6 +195,18 @@ public class LoginPageFragment extends Fragment {
 
 			@Override
 			public void onAddEstimateTaskDone(boolean isAddEstimateSuccess) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onDeleteCompareTaskDone(boolean isDeleteCompareSuccess) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onDeleteEstimateTaskDone(boolean isDeleteEstimateSuccess) {
 				// TODO Auto-generated method stub
 				
 			}

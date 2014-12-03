@@ -51,12 +51,32 @@ public class WebViewJavascriptInterface {
 	}
 	
 	@JavascriptInterface
-	public void addEstimateDeletedRoom(String deletedRoom) {
-		((EstimateFragment) mFragment).setDeletedRoom(deletedRoom);
+	public void addCompareDeletedRoom(String deletedRoom) {
+		((CompareFragment) mFragment).setDeletedRoom(deletedRoom);
 	}
 	
 	@JavascriptInterface
-	public void addCompareDeletedRoom(String deletedRoom) {
-		((CompareFragment) mFragment).setDeletedRoom(deletedRoom);
+	public void addEstimateDeletedRoom(String deletedRoom) {
+		((EstimateFragment) mFragment).setDeletedRoom(deletedRoom);
+	}
+
+	@JavascriptInterface
+	public void addEstimateDeletedAlcohol(String deletedAlcohol) {
+		((EstimateFragment) mFragment).setDeletedAlcohol(deletedAlcohol);
+	}
+
+	@JavascriptInterface
+	public void addEstimateDeletedBarbecue(String deletedBarbecue) {
+		((EstimateFragment) mFragment).setDeletedBarbecue(deletedBarbecue);
+	}
+
+	@JavascriptInterface
+	public void addEstimateDeletedOthers(String deletedOthers) {
+		((EstimateFragment) mFragment).setDeletedOther(deletedOthers);
+	}
+	
+	@JavascriptInterface
+	public void loadOverallEstimate() {
+		((EstimateFragment) mFragment).loadEstimate();
 	}
 }
