@@ -180,6 +180,7 @@ public class SignUpPageFragment extends Fragment {
 				case LOGIN_SUCCESSFUL:
 					Intent intent = new Intent(getActivity()
 							.getApplicationContext(), MainActivity.class);
+					intent.putExtra("SESSION_ID", emailAddress.getText().toString());
 					startActivity(intent);
 					getActivity().finish();
 					break;

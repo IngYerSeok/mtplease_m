@@ -42,6 +42,7 @@ public class EstimateFragment extends Fragment {
 	View progressBarBackground;
 	Drawable pbBackground;
 	private String user_id;
+	private int people=20;
 
 	private String stringifiedAlcoholData;
 	private String stringifiedBarbecueData;
@@ -123,7 +124,7 @@ public class EstimateFragment extends Fragment {
 			try {
 				webViewEstimate
 				.loadUrl("http://mtplease.herokuapp.com/pensions/estimate_m/overall?user_id="
-						+ user_id);
+						+ user_id + "&people=" + people);
 				
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
@@ -456,6 +457,11 @@ public class EstimateFragment extends Fragment {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void setPeopleNumber(String string) {
+		people = Integer.parseInt(string);
+		
 	}
 
 }

@@ -148,7 +148,7 @@ public class MainActivity extends SlidingActivity implements
 				});
 
 		// 화면 스와이핑을 할 때마다 로딩되는 좌우 페이지 갯수 설정
-		mViewPager.setOffscreenPageLimit(2);
+		mViewPager.setOffscreenPageLimit(3);
 
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -193,29 +193,36 @@ public class MainActivity extends SlidingActivity implements
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				String region = locationSelectSpinner.getSelectedItem()
-						.toString();
-				if (region.equals("대성리로")) {
-					region = "1";
-				} else if (region.equals("청평으로")) {
-					region = "2";
-				} else {
-					region = "3";
+				try {
+					String region = locationSelectSpinner.getSelectedItem()
+							.toString();
+					if (region.equals("대성리로")) {
+						region = "1";
+					} else if (region.equals("청평으로")) {
+						region = "2";
+					} else {
+						region = "3";
+					}
+
+					String people = ((EditText) findViewById(R.id.editText_numberPeople))
+							.getText().toString();
+
+					String[] tmp = (datePickerButton.getText().toString())
+							.split(" ");
+					String date = tmp[0].substring(0, 4) + "-"
+							+ tmp[1].split("월")[0] + "-" + tmp[2].split("일")[0];
+
+					String query = "?region=" + region + "&people=" + people
+							+ "&date=" + date + "&flag=1";
+					sendInfoToFragment(people, 2);
+					sendInfoToFragment(query, 0);
+
+					getSlidingMenu().showContent();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					Toast.makeText(getApplicationContext(), "인원 수를 입력해주세요", Toast.LENGTH_SHORT);
+					e.printStackTrace();
 				}
-
-				String people = ((EditText) findViewById(R.id.editText_numberPeople))
-						.getText().toString();
-
-				String[] tmp = (datePickerButton.getText().toString())
-						.split(" ");
-				String date = tmp[0].substring(0, 4) + "-"
-						+ tmp[1].substring(0, 2) + "-" + tmp[2].substring(0, 2);
-
-				String query = "?region=" + region + "&people=" + people
-						+ "&date=" + date + "&flag=1";
-				sendInfoToFragment(query, 0);
-
-				getSlidingMenu().showContent();
 			}
 
 		});
@@ -277,7 +284,7 @@ public class MainActivity extends SlidingActivity implements
 	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 		private MainFragment mMainFragment;
-		//private MyPageFragment mMyPageFragment;
+		private MyPageFragment mMyPageFragment;
 		private CompareFragment mCompareFragment;
 		private EstimateFragment mEstimateFragment;
 
@@ -289,13 +296,13 @@ public class MainActivity extends SlidingActivity implements
 					.newInstance(1 + 1);
 			this.mEstimateFragment = (EstimateFragment) PlaceholderFragment
 					.newInstance(2 + 1);
-			//this.mMyPageFragment = (MyPageFragment) PlaceholderFragment.newInstance(3 + 1);
+			this.mMyPageFragment = (MyPageFragment) PlaceholderFragment.newInstance(3 + 1);
 			
 			extras = getIntent().getExtras();
 			this.mMainFragment.setArguments(extras);
 			this.mCompareFragment.setArguments(extras);
 			this.mEstimateFragment.setArguments(extras);
-			//this.mMyPageFragment.setArguments(extras);
+			this.mMyPageFragment.setArguments(extras);
 		}
 
 		@Override
@@ -311,8 +318,8 @@ public class MainActivity extends SlidingActivity implements
 				return mCompareFragment;
 			case 2:
 				return mEstimateFragment;
-			//case 3:
-			//	return mMyPageFragment;
+			case 3:
+				return mMyPageFragment;
 			}
 			Log.e("getItem Error", "return null");
 			return null;
@@ -321,7 +328,7 @@ public class MainActivity extends SlidingActivity implements
 		@Override
 		public int getCount() {
 			// Show 4 total pages.
-			return 3;
+			return 4;
 		}
 
 		@Override
@@ -334,8 +341,8 @@ public class MainActivity extends SlidingActivity implements
 				return getString(R.string.title_section2).toUpperCase(l);
 			case 2:
 				return getString(R.string.title_section3).toUpperCase(l);
-			//case 3:
-			//	return getString(R.string.title_section4).toUpperCase(l);
+			case 3:
+				return getString(R.string.title_section4).toUpperCase(l);
 			}
 			return null;
 		}
@@ -369,9 +376,9 @@ public class MainActivity extends SlidingActivity implements
 			case 3:
 				selectedFragment = new EstimateFragment();
 				break;
-			//case 4:
-			//	selectedFragment = new MyPageFragment();
-			//	break;
+			case 4:
+				selectedFragment = new MyPageFragment();
+				break;
 			}
 			Bundle args = new Bundle();
 			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -544,7 +551,13 @@ public class MainActivity extends SlidingActivity implements
 		case 2:
 			EstimateFragment estimatefrag = (EstimateFragment) mSectionsPagerAdapter
 					.getItem(position);
-			estimatefrag.addEstimateRoom(string);
+			if(string.length() > 3){
+				estimatefrag.addEstimateRoom(string);
+			}
+			else {
+				estimatefrag.setPeopleNumber(string);
+			}
+			
 			break;
 		case 3:
 			MyPageFragment mypagefrag = (MyPageFragment) mSectionsPagerAdapter
